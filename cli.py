@@ -1,4 +1,5 @@
 import yaml
+import argparse
 from data_source.jrnl import JrnlDataSource
 from data_source.git_commits import GitCommitsDataSource
 from processor import Processor
@@ -11,19 +12,34 @@ def load_config(config_path="config.yaml"):
 
 def create_data_source(source_config):
     if source_config["type"] == "jrnl":
-        return JrnlDataSource(source_config["name"])
+        return JrnlDataSource(source_config["name"], source_config.get("args", []))
     elif source_config["type"] == "git_commits":
-        return GitCommitsDataSource(source_config["name"], source_config["repositories"])
+        return GitCommitsDataSource(
+            source_config["name"], source_config["repositories"]
+        )
     else:
         raise ValueError(f"Unknown data source type: {source_config['type']}")
 
 
+def parse_args():
+    parser = argparse.ArgumentParser(
+        description="Process data sources based on configuration."
+    )
+    parser.add_argument(
+        "--config",
+        "-c",
+        default="config.yaml",
+        help="Path to the configuration file (default: config.yaml)",
+    )
+    return parser.parse_args()
+
+
 def main():
-    config = load_config()
-    
+    args = parse_args()
+    config = load_config(args.config)
+
     data_sources = [
-        create_data_source(source_config)
-        for source_config in config["data_sources"]
+        create_data_source(source_config) for source_config in config["data_sources"]
     ]
 
     processor = Processor(

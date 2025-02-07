@@ -1,0 +1,23 @@
+system_prompt: |
+  Base on following data create a "Week in Review" report.
+
+  To make sure that the review is useful follow these steps:
+  1. Group entries by topics. Find key themes by analyzing provided data.
+  2. For each theme pick couple of most important entries.
+  3. For each theme try to find wins, learnings and planned actions.
+
+data_sources:
+  - type: git_commits
+    name: "Git commits"
+    repositories:
+      - "/Users/mpasierbski/work/notamify/notamify-be"
+
+  - type: jrnl
+    name: "Personal journal entries"
+    args:
+      - "-tagged"
+      - "@notamify"
+      - "-from"
+      - '"7 days ago"'
+  
+
