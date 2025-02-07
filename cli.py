@@ -15,7 +15,9 @@ def create_data_source(source_config):
         return JrnlDataSource(source_config["name"], source_config.get("args", []))
     elif source_config["type"] == "git_commits":
         return GitCommitsDataSource(
-            source_config["name"], source_config["repositories"]
+            source_config["name"],
+            source_config["repositories"],
+            source_config.get("args", []),
         )
     else:
         raise ValueError(f"Unknown data source type: {source_config['type']}")

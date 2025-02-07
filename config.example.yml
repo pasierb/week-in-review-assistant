@@ -9,8 +9,13 @@ system_prompt: |
 data_sources:
   - type: jrnl
     name: "Personal journal entries"
-  
+    args:
+      - "-n"
+      - "10"
+
   - type: git_commits
     name: "Git commits"
     repositories:
       - "/Users/mpasierbski/work/notamify/notamify-be"
+    args:
+      - "--since=1 week ago"

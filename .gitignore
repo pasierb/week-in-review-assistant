@@ -172,3 +172,5 @@ cython_debug/
 
 config.yaml
 *.config.yaml
+config.yml
+*.config.yml
